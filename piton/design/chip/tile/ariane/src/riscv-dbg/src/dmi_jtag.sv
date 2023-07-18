@@ -87,6 +87,7 @@ module dmi_jtag #(
     logic [512-1:0] pass_data;
     logic hmac_ready;
     logic hashValid;
+    logic [1:0] miss_pass_check_cnt_d, miss_pass_check_cnt_q;
 
 
     dmi_t  dmi;
@@ -110,6 +111,7 @@ module dmi_jtag #(
         address_d = address_q;
         data_d    = data_q;
         error_d   = error_q;
+        miss_pass_check_cnt_d = miss_pass_check_cnt_q;
 
         dmi_req_valid = 1'b0;
         pass_check = 1'b0;
@@ -126,7 +128,7 @@ module dmi_jtag #(
                         state_d = Read;
                     end else if ( (dm::dtm_op_e'(dmi.op) == dm::DTM_WRITE) && (pass_check == 1) ) begin
                         state_d = Write;
-                    end else if (dm::dtm_op_e'(dmi.op) == dm::DTM_PASS) begin
+                    end else if ( (dm::dtm_op_e'(dmi.op) == dm::DTM_PASS) && (miss_pass_check_cnt_q != 2'b11) ) begin
                         state_d = Write;
                         pass_mode = 1'b1;
                     end 
@@ -195,6 +197,7 @@ module dmi_jtag #(
                         pass_check = 1'b1;
                     end else begin
                         pass_check = 1'b0;
+                        miss_pass_check_cnt_d = miss_pass_check_cnt_q + 1;
                     end
                     state_d = Idle;
                 end else begin
@@ -258,12 +261,14 @@ module dmi_jtag #(
             address_q <= '0;
             data_q    <= '0;
             error_q   <= DMINoError;
+            miss_pass_check_cnt_q <= 2'b00;
         end else begin
             dr_q      <= dr_d;
             state_q   <= state_d;
             address_q <= address_d;
             data_q    <= data_d;
             error_q   <= error_d;
+            miss_pass_check_cnt_q <= miss_pass_check_cnt_d;
         end
     end
 
