@@ -79,7 +79,7 @@ module dmi_jtag #(
 
     logic [$bits(dmi_t)-1:0] dr_d, dr_q;
     logic [6:0] address_d, address_q;
-    logic [31:0] data_d, data_q;
+    logic [512-1:0] data_d, data_q;
     logic pass_check;
     logic pass_mode;
     logic startHash;
@@ -155,7 +155,7 @@ module dmi_jtag #(
                 if (dmi_req_ready) begin
                     data_d = dmi_resp.data; 
                     if (pass_mode) begin
-                        pass_data = { {60{8'h00}}, data_d};
+                        pass_data = data_d;
                         state_d = PassChk;
                         pass_mode = 1'b0;
                     end else begin
