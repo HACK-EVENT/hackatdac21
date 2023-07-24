@@ -12,7 +12,7 @@ module fuse_mem
    output logic [31:0]  rdata_o
 );
     parameter  MEM_SIZE = 100;
-    localparam JTAG_OFFSET = 81; 
+    localparam JTAG_OFFSET = 100; 
 
 // Store key values here. // Replication of fuse. 
     const logic [MEM_SIZE-1:0][31:0] mem = {
