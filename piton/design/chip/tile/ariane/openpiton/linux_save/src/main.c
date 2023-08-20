@@ -506,7 +506,7 @@ void * memcpy(void *to, const void *from, size_t numBytes)
 void * memcpy_w(void *to, const void *from, size_t numWords)
 {
     for (int i=0; i<numWords; i++)
-        *((uint32_t *)to+i) = *((uint32_t *)from+i);
+        *((uint16_t *)to+i) = *((uint16_t *)from+i);
     return to; 
 } 
 
