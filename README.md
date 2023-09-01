@@ -1,4 +1,11 @@
-![OpenPiton Logo](/docs/openpiton_logo_black.png?raw=true)
+# IMPORTANT NOTE
+This repository has been directly duplicated from the original OpenPiton repository, which includes the licensing information for OpenPiton authors. However, it is important to note that during the HACK@DAC21 event, vulnerabilities were intentionally introduced into the code, and it now also contains the HACK@DAC license.
+
+If you intend to utilize this repository for your research purposes, we strongly advise you to carefully review and adhere to both the HACK@DAC and OpenPiton licensing terms.
+
+## Support & Questions
+
+For any issues with the SoC or any questions you can refer to [Hack@Event](https://hackatevent.org) website.
 
 # OpenPiton Research Platform   [![Build Status](https://jenkins.princeton.edu/buildStatus/icon?job=cloud/piton_git_push_master)](https://jenkins.princeton.edu/job/cloud/job/piton_git_push_master/)
 
