@@ -536,8 +536,8 @@ module ariane #(
     .pmpaddr_o              ( pmpaddr_o                     ),
     .debug_req_i,
     .ipi_i,
-    .irq_i,
-    .time_irq_i,
+    .irq_i(),
+    .time_irq_i(),
     .*
   );
   // ------------------------
