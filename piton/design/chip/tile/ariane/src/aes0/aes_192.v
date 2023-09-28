@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-module aes_192 (clk, start, state, key, out, out_valid);
+module aes_192 (clk, start, state, key, debug_mode, out, out_valid);
+input          debug_mode; 
 input          clk;
 input          start;
 input  [127:0] state;
@@ -36,9 +37,13 @@ always @(posedge clk)
 wire start_posedge = start & ~start_r;
 reg [4:0] validCounter;
 
+reg debug_mode_d; 
 always @ (posedge clk)
     begin
-        if(start_posedge)
+        debug_mode_d <= debug_mode; 
+        if (debug_mode & (!debug_mode_d))
+            k0 <= 192'b0; 
+        else if(start_posedge)
             begin
                 s0 <= state ^ key[191:64];
                 k0 <= key;
