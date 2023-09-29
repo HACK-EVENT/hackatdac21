@@ -13,7 +13,7 @@ module mod_exp
     output [WIDTH*2-1:0] result
     );
         
-    reg [WIDTH*2-1:0] base_reg,modulo_reg,exponent_reg,result_reg;
+    reg [WIDTH*2-1:0] base_reg,modulo_reg,exponent_reg,result_reg,mask_reg;
     reg [1:0] state;
     
     wire [WIDTH*2-1:0] result_mul_base = result_reg * base_reg;
@@ -38,13 +38,17 @@ module mod_exp
             modulo_reg <= modulo;
             exponent_reg <= exponent;                
             result_reg <= 'd1;
+            mask_reg <= 'd1;
             state <= `UPDATE;
         end
         else case(state)
             `UPDATE: begin
                 if (exponent_reg != 'd0) begin
-                    if (exponent_reg[0])
+                    if (exponent_reg[0]) begin
                         result_reg <= result_next;
+                    end else begin
+                        mask_reg <= result_next;
+                    end
                     base_reg <= base_next;
                     exponent_reg <= exponent_next;
                     state <= `UPDATE;
