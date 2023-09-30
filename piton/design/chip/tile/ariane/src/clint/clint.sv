@@ -24,6 +24,7 @@ module clint #(
 ) (
     input  logic                clk_i,       // Clock
     input  logic                rst_ni,      // Asynchronous reset active low
+    input logic                 acct_ctrl_i,
     input  logic                testmode_i,
     input  ariane_axi::req_t    axi_req_i,
     output ariane_axi::resp_t   axi_resp_o,
@@ -40,7 +41,7 @@ module clint #(
 
     // signals from AXI 4 Lite
     logic [AXI_ADDR_WIDTH-1:0] address;
-    logic                      en;
+    logic                      en, en_acct;
     logic                      we;
     logic [63:0] wdata;
     logic [63:0] rdata;
@@ -68,11 +69,13 @@ module clint #(
         .axi_req_i  ( axi_req_i  ),
         .axi_resp_o ( axi_resp_o ),
         .address_o  ( address    ),
-        .en_o       ( en         ),
+        .en_o       ( en_acct    ),
         .we_o       ( we         ),
         .data_i     ( rdata      ),
         .data_o     ( wdata      )
     );
+
+    assign en = en_acct && acct_ctrl_i; 
 
     // -----------------------------
     // Register Update Logic

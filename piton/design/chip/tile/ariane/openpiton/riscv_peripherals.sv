@@ -610,6 +610,7 @@ module riscv_peripherals #(
   ) i_clint (
     .clk_i                         ,
     .rst_ni                        ,
+    .acct_ctrl_i   ( acc_ctrl_c[priv_lvl_i][7]),
     .testmode_i                    ,
     .axi_req_i   ( clint_axi_req  ),
     .axi_resp_o  ( clint_axi_resp ),
