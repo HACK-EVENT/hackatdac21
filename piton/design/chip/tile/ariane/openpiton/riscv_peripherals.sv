@@ -531,7 +531,7 @@ module riscv_peripherals #(
   );
 
   // we want to run in baremetal mode when using pitonstream
-  assign rom_rdata = (ariane_boot_sel_i) ? rom_rdata_linux : rom_rdata_linux;
+  assign rom_rdata = (ariane_boot_sel_i) ? rom_rdata_bm : rom_rdata_linux;
 
   noc_axilite_bridge #(
     .SLAVE_RESP_BYTEWIDTH   ( 8             ),
