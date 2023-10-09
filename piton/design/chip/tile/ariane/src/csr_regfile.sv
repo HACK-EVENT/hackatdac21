@@ -361,16 +361,14 @@ module csr_regfile #(
         // --------------------
         cycle_d = cycle_q;
         instret_d = instret_q;
-        if (!debug_mode_q) begin
-            // increase instruction retired counter
-            for (int i = 0; i < NrCommitPorts; i++) begin
-                if (commit_ack_i[i] && !ex_i.valid) instret++;
-            end
-            instret_d = instret;
-            // increment the cycle count
-            if (ENABLE_CYCLE_COUNT) cycle_d = cycle_q + 1'b1;
-            else cycle_d = instret;
+        // increase instruction retired counter
+        for (int i = 0; i < NrCommitPorts; i++) begin
+            if (commit_ack_i[i] && !ex_i.valid) instret++;
         end
+        instret_d = instret;
+        // increment the cycle count
+        if (ENABLE_CYCLE_COUNT) cycle_d = cycle_q + 1'b1;
+        else cycle_d = instret;
 
         eret_o                  = 1'b0;
         flush_o                 = 1'b0;
