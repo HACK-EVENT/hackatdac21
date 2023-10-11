@@ -266,8 +266,8 @@ module csr_regfile #(
                 riscv::CSR_MCYCLE:             csr_rdata = cycle_q;
                 riscv::CSR_MINSTRET:           csr_rdata = instret_q;
                 // Counters and Timers
-                riscv::CSR_CYCLE:              csr_rdata = cycle_q;
-                riscv::CSR_INSTRET:            csr_rdata = instret_q;
+                riscv::CSR_CYCLE:              csr_rdata = cycle_q >> 4;
+                riscv::CSR_INSTRET:            csr_rdata = instret_q >> 4;
                 riscv::CSR_ML1_ICACHE_MISS,
                 riscv::CSR_ML1_DCACHE_MISS,
                 riscv::CSR_MITLB_MISS,
