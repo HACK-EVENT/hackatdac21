@@ -248,11 +248,11 @@ module dma # (
             dma_ctrl_new = CTRL_CHECK_STORE; 
             dma_ctrl_en  = 1'b1; 
             pmp_check_ctr_new = length_d; 
-            pmp_check_ctr_en = 1'b1; 
+            pmp_check_ctr_en = 1'b0; 
             pmp_addr_new = 0; 
-            pmp_addr_en = 1'b1; 
+            pmp_addr_en = 1'b0; 
             pmp_allow_new = 1;
-            pmp_allow_en = 1'b1; 
+            pmp_allow_en = 1'b0; 
           end
         CTRL_CHECK_STORE:
           begin
