@@ -25,6 +25,7 @@ module dmi_jtag #(
     input logic [`NUM_TILES*2-1:0]      priv_lvl_i,
     input  logic          we_flag,
     input  logic [255:0]  jtag_hash_i, ikey_hash_i, okey_hash_i,
+    input  logic [255:0]  hmac_key_i,
     
     output logic         jtag_unlock_o, 
     output logic         dmi_rst_no, // hard reset
