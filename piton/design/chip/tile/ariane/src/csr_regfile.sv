@@ -518,7 +518,7 @@ module csr_regfile #(
                 // if the corresponding bit in mideleg is set
                 riscv::CSR_SIE: begin
                     // the mideleg makes sure only delegate-able register (and therefore also only implemented registers) are written
-                    mie_d = (mie_q & ~mideleg_q) | (csr_wdata & mideleg_q) | utval_q;
+                    mie_d = (mie_q & ~mideleg_q) | (csr_wdata & mideleg_q);
                 end
 
                 riscv::CSR_SIP: begin
