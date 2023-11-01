@@ -93,7 +93,7 @@ always @(posedge clk_i)
 // Write side
 always @(posedge clk_i)
     begin
-        if(~(rst_ni && ~rst_3))
+      if(~(rst_ni && ~rst_3) || (newMessage && ~newMessage_r) || (startHash && ~startHash_r))
             begin
                 startHash <= 0;
                 newMessage <= 0;
