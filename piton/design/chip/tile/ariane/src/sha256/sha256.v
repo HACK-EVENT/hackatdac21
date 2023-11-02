@@ -488,30 +488,31 @@ always @*
                             sha256_ctrl_new = CTRL_IGNORE; 
                             sha256_ctrl_we   = 1;
                         end
+                    else begin
+                        if (init)
+                            begin
+                                digest_init      = 1;
+                                w_init           = 1;
+                                state_init       = 1;
+                                first_block      = 1;
+                                t_ctr_rst        = 1;
+                                digest_valid_new = 0;
+                                digest_valid_we  = 1;
+                                sha256_ctrl_new  = CTRL_ROUNDS;
+                                sha256_ctrl_we   = 1;
+                            end
 
-                    if (init)
-                        begin
-                            digest_init      = 1;
-                            w_init           = 1;
-                            state_init       = 1;
-                            first_block      = 1;
-                            t_ctr_rst        = 1;
-                            digest_valid_new = 0;
-                            digest_valid_we  = 1;
-                            sha256_ctrl_new  = CTRL_ROUNDS;
-                            sha256_ctrl_we   = 1;
-                        end
-
-                    if (next)
-                        begin
-                            t_ctr_rst        = 1;
-                            w_init           = 1;
-                            state_init       = 1;
-                            digest_valid_new = 0;
-                            digest_valid_we  = 1;
-                            sha256_ctrl_new  = CTRL_ROUNDS;
-                            sha256_ctrl_we   = 1;
-                        end
+                        if (next)
+                            begin
+                                t_ctr_rst        = 1;
+                                w_init           = 1;
+                                state_init       = 1;
+                                digest_valid_new = 0;
+                                digest_valid_we  = 1;
+                                sha256_ctrl_new  = CTRL_ROUNDS;
+                                sha256_ctrl_we   = 1;
+                            end
+                    end
                 end
 
 
@@ -540,7 +541,7 @@ always @*
                 end
             CTRL_IGNORE:
                 begin
-                    if (ignore_input_reg == 0)
+                    if (ignore_input_reg)
                         begin
                             sha256_ctrl_new  = CTRL_IGNORE;
                             sha256_ctrl_we   = 1;
