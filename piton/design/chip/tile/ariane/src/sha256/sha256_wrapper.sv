@@ -79,12 +79,14 @@ always @(posedge clk_i)
       begin
         startHash_r <= 1'b0;
         newMessage_r <= 1'b0;
+        hashValid_r <= 1'b0;
       end
     else
       begin
         // Generate a registered versions of startHash and newMessage
         startHash_r         <= startHash;
         newMessage_r        <= newMessage;
+        hashValid_r         <= hashValid;
       end
   end
 
@@ -93,7 +95,7 @@ always @(posedge clk_i)
 // Write side
 always @(posedge clk_i)
     begin
-      if(~(rst_ni && ~rst_3) || (newMessage && ~newMessage_r) || (startHash && ~startHash_r))
+      if(~(rst_ni && ~rst_3))
             begin
                 startHash <= 0;
                 newMessage <= 0;
@@ -114,6 +116,27 @@ always @(posedge clk_i)
                 data[14] <= 0;
                 data[15] <= 0;
             end
+      else if(hashValid && ~hashValid_r)
+            begin
+                startHash <= 0;
+                newMessage <= 0;
+                data[0] <= 0;
+                data[1] <= 0;
+                data[2] <= 0;
+                data[3] <= 0;
+                data[4] <= 0;
+                data[5] <= 0;
+                data[6] <= 0;
+                data[7] <= 0;
+                data[8] <= 0;
+                data[9] <= 0;
+                data[10] <= 0;
+                data[11] <= 0;
+                data[12] <= 0;
+                data[13] <= 0;
+                data[14] <= 0;
+                data[15] <= 0;
+            end      
         else if(en && we)
             begin
                 case(address[7:3])
