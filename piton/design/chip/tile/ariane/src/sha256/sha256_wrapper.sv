@@ -26,7 +26,7 @@ module sha256_wrapper #(
 // internal signals
 
 // Internal registers
-reg newMessage_r, startHash_r;
+reg newMessage_r, startHash_r, hashValid_r;
 logic startHash;
 logic newMessage;
 logic [31:0] data [0:15];
