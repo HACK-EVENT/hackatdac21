@@ -88,6 +88,9 @@ module dma # (
   reg pmp_allow_reg, pmp_allow_new; 
   reg pmp_allow_en; 
 
+  reg [7:0] [16-1:0] pmpcfg_reg;   
+  reg [16-1:0][53:0]     pmpaddr_reg;  
+
   reg [DATA_WIDTH-1:0] valid_reg, valid_new;
   reg valid_en;
 
@@ -118,7 +121,9 @@ module dma # (
           source_addr_lsb_d <= 'b0 ; 
           source_addr_msb_d <= 'b0 ; 
           dest_addr_lsb_d <= 'b0 ; 
-          dest_addr_msb_d <= 'b0 ; 
+          dest_addr_msb_d <= 'b0 ;
+          pmpaddr_reg <= 'b0 ;
+          pmpcfg_reg <= 'b0 ; 
         end
       else 
         begin
@@ -130,6 +135,8 @@ module dma # (
             source_addr_msb_d <= source_addr_msb_i;
             dest_addr_lsb_d <= dest_addr_lsb_i;
             dest_addr_msb_d <= dest_addr_msb_i;
+            pmpaddr_reg <= pmpaddr_i;
+            pmpcfg_reg <= pmpcfg_i;
           end
         end 
     end // save_inputs 
@@ -248,11 +255,11 @@ module dma # (
             dma_ctrl_new = CTRL_CHECK_STORE; 
             dma_ctrl_en  = 1'b1; 
             pmp_check_ctr_new = length_d; 
-            pmp_check_ctr_en = 1'b0; 
+            pmp_check_ctr_en = 1'b1; 
             pmp_addr_new = 0; 
-            pmp_addr_en = 1'b0; 
+            pmp_addr_en = 1'b1; 
             pmp_allow_new = 1;
-            pmp_allow_en = 1'b0; 
+            pmp_allow_en = 1'b1; 
           end
         CTRL_CHECK_STORE:
           begin
@@ -355,8 +362,8 @@ module dma # (
                                                 // DMA always, so choose the least privilege
         .access_type_i ( pmp_access_type_reg ),
         // Configuration
-        .conf_addr_i   ( pmpaddr_i           ),
-        .conf_i        ( pmpcfg_i            ),
+        .conf_addr_i   ( pmpaddr_reg           ),
+        .conf_i        ( pmpcfg_reg            ),
         .allow_o       ( pmp_data_allow      )
     );
 
