@@ -516,11 +516,11 @@ module riscv_peripherals #(
   //assign rom_req = rom_req_acct ; //&& acc_ctrl_c[priv_lvl_i][0]; 
   assign rom_req = rom_req_acct && acc_ctrl_c[priv_lvl_i][0]; 
 
-  bootrom i_bootrom_bm (
+  bootrom i_bootrom_patch (
     .clk_i                   ,
     .req_i      ( rom_req   ),
     .addr_i     ( rom_addr  ),
-    .rdata_o    ( rom_rdata_bm )
+    .rdata_o    ( rom_rdata_patch )
   );
 
   bootrom_linux i_bootrom_linux (
@@ -531,7 +531,7 @@ module riscv_peripherals #(
   );
 
   // we want to run in baremetal mode when using pitonstream
-  assign rom_rdata = (ariane_boot_sel_i) ? rom_rdata_bm : rom_rdata_linux;
+  assign rom_rdata = (ariane_boot_sel_i) ? rom_rdata_patch : rom_rdata_linux;
 
   noc_axilite_bridge #(
     .SLAVE_RESP_BYTEWIDTH   ( 8             ),
