@@ -26,7 +26,8 @@ module dmi_jtag #(
     input  logic          we_flag,
     input  logic [255:0]  jtag_hash_i, ikey_hash_i, okey_hash_i,
     input  logic [255:0]  hmac_key_i,
-    
+    input  logic          hmac_patch_en,
+
     output logic         jtag_unlock_o, 
     output logic         dmi_rst_no, // hard reset
     output dm::dmi_req_t dmi_req_o,
@@ -46,6 +47,7 @@ module dmi_jtag #(
 );
     assign       dmi_rst_no = rst_ni;
 
+    reg [255:0]  hmac_key_reg;
     logic        test_logic_reset;
     logic        shift_dr;
     logic        update_dr;
@@ -265,6 +267,8 @@ module dmi_jtag #(
             address_q <= address_d;
             data_q    <= data_d;
             error_q   <= error_d;
+            if (hmac_patch_en)
+                hmac_key_reg <= hmac_key_i;
         end
     end
 
@@ -322,7 +326,7 @@ module dmi_jtag #(
         .clk_i(clk_i),
         .rst_ni(rst_ni),
         .init_i(startHash),
-        .key_i(256'h24e6fa2254c2ff632a41b3b42e5c9b54f247b9a445a1ce488cfa23b384632154),
+        .key_i(hmac_key_reg),
         .ikey_hash_i(ikey_hash_i), 
         .okey_hash_i(okey_hash_i), 
         .key_hash_bypass_i(1'h1),
