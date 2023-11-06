@@ -204,7 +204,7 @@ module dma # (
           begin
             if (pmp_check_ctr_reg == 32'hffffffff)
               begin
-                dma_ctrl_new = (pmp_allow_reg && pmp_data_allow) ? CTRL_LOAD : CTRL_CHECK_STORE; 
+                dma_ctrl_new = (pmp_allow_reg && pmp_data_allow) ? CTRL_LOAD : CTRL_DONE; 
                 dma_ctrl_en  = 1'b1; 
               end
             else
