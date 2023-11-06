@@ -25,7 +25,7 @@ module fuse_mem
         // poly 64
         32'hd8000000, 32'h00000000, 
         //poly 32
-        32'h00000000,
+        32'h80200005,
         // poly 16
         32'h0000d008, 
         //RNG POLY END
