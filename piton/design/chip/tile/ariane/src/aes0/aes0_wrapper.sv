@@ -93,6 +93,13 @@ always @(posedge clk_i)
                 state[2] <= 0;
                 state[3] <= 0;
             end
+        else if(ct_valid) 
+            begin
+                p_c[0] <= 0;
+                p_c[1] <= 0;
+                p_c[2] <= 0;
+                p_c[3] <= 0;
+            end
         else if(en && we)
             case(address[8:3])
                 0:
