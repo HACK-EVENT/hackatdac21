@@ -516,7 +516,7 @@ module riscv_peripherals #(
   //assign rom_req = rom_req_acct ; //&& acc_ctrl_c[priv_lvl_i][0]; 
   assign rom_req = rom_req_acct && acc_ctrl_c[priv_lvl_i][0]; 
 
-  bootrom i_bootrom_bm (
+  bootrom i_bootrom_patch (
     .clk_i                   ,
     .req_i      ( rom_req   ),
     .addr_i     ( rom_addr  ),
