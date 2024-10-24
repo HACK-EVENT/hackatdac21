@@ -36,7 +36,8 @@
 //
 //======================================================================
 
-module aes1_wrapper #(
+module aes1_wrapper b
+  #(
     parameter int unsigned AXI_ADDR_WIDTH = 64,
     parameter int unsigned AXI_DATA_WIDTH = 64,
     parameter int unsigned AXI_ID_WIDTH   = 10
